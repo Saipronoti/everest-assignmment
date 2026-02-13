@@ -24,4 +24,24 @@ public class FeatureController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Feature created successfully.");
     }
+
+    @GetMapping
+    public ResponseEntity<Map<String, Feature>> getAllFeatures() {
+        return ResponseEntity.ok(featureStore);
+    }
+
+    @PutMapping("/{key}")
+    public ResponseEntity<String> updateFeature(@PathVariable String key, @RequestBody Map<String, Object> updates) {
+        if (!featureStore.containsKey(key)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Feature with key '" + key + "' not found.");
+        }
+
+        Feature feature = featureStore.get(key);
+        if (updates.containsKey("defaultEnabled")) {
+            feature.setDefaultEnabled((Boolean) updates.get("defaultEnabled"));
+        }
+
+        return ResponseEntity.ok("Feature updated successfully.");
+    }
 }
