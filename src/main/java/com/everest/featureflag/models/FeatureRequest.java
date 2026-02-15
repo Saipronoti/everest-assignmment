@@ -1,6 +1,6 @@
 package com.everest.featureflag.models;
 
-public class Feature {
+public class FeatureRequest {
     private String key;
     private boolean defaultEnabled;
     private String description;
